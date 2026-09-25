@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Muath Group Alloy Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero"><div class="wrap">
+    <small>MUATH GROUP</small>
+    <h1>Intermetallic Alloy Sample Calculator</h1>
+    <p>Calculate formula mass, theoretical density, die area, and sample height.</p>
+  </div></header>
+  <main class="wrap">
+    <section class="card input-only">
+      <div class="heading"><b>1</b><div><h2>Report details</h2><p>Shown in the PDF report.</p></div></div>
+      <div class="grid three">
+        <label>Your name<input id="operator" placeholder="e.g. Latif"></label>
+        <label>Sample name<input id="sample" placeholder="e.g. Nb₂Co₂InSb"></label>
+        <label>Calculation date<input id="date" type="date"></label>
+      </div>
+    </section>
+    <section class="card input-only">
+      <div class="section-head"><div class="heading"><b>2</b><div><h2>Alloy composition</h2><p>Add each element and its material data.</p></div></div><button id="addElement" class="secondary" type="button">+ Add element</button></div>
+      <div id="elementRows"></div>
+    </section>
+    <section class="card input-only">
+      <div class="heading"><b>3</b><div><h2>Sample and die details</h2><p>Diameter is entered in cm; height is reported in mm.</p></div></div>
+      <div class="grid two">
+        <label>Sample mass (g)<input id="sampleMass" type="number" min="0" step="any" value="5"></label>
+        <label>Die diameter (cm)<input id="dieDiameter" type="number" min="0" step="any" value="1.27"></label>
+      </div>
+    </section>
+    <div class="actions input-only"><button id="calculate" type="button">Create alloy report</button><button id="loadExample" class="secondary" type="button">Load Nb₂Co₂InSb example</button><button id="clear" class="ghost" type="button">Clear form</button></div>
+    <div id="error" class="error input-only" role="alert"></div>
+    <section id="result" class="report" hidden></section>
+  </main>
+  <template id="element-template"><article class="element-row"><div class="element-top"><strong class="element-number"></strong><button class="remove" type="button">×</button></div><div class="grid element-grid"><label>Element symbol<input class="symbol" placeholder="e.g. Nb"></label><label>Ratio<input class="ratio" type="number" min="0" step="any"></label><label>Atomic mass (g/mol)<input class="mass" type="number" min="0" step="any"></label><label>Density (g/cm³)<input class="density" type="number" min="0" step="any"></label></div></article></template>
+  <script src="script.js" defer></script>
+</body>
+</html>

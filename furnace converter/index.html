@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Convert a plain-language heating profile into UP150 furnace controller settings.">
+  <title>Dr Muath TE Group-TF</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner"><div><h1>Simple Converter for Tube Furnace @ Dr Muath TE Group</h1>
+      <p>Simply input all your heating parameters and get a concise pdf report of all parameters to input for the tube furnace</p>
+      <p><i>Please note that this is just a conversion tool, actual operation should be sought through training or manual guide</i></p>
+    </div></div>
+  </header>
+
+  <main>
+    <section class="card input-only">
+      <div class="heading"><b>1</b><div><h2>Run details</h2><p>This information would be shown in the pdf report for record purposes</p></div></div>
+      <div class="grid three">
+        <label>Your name<input id="operator" autocomplete="name" placeholder="e.g. Dr Muath" required></label>
+        <label>Your sample name<input id="sample" placeholder="e.g. NS1"></label>
+        <label>When are you using furnace?<input id="date" type="date" required></label>
+      </div>
+    </section>
+
+    <section class="card input-only">
+      <div class="section-head">
+        <div class="heading"><b>2</b><div><h2>Heating profile</h2><p>Please continue to click <strong>"+ Add Stage"</strong> to add as many stages as required</p></div></div>
+        <button id="add" class="secondary" type="button">+ Add stage</button>
+      </div>
+      <label class="start">Starting temperature (°C) - usually 25<input id="start" type="number" value="25" min="0" max="1100" step="1"></label>
+      <div id="stages"></div>
+    </section>
+
+    <section class="card input-only">
+      <div class="heading"><b>3</b><div><h2>End behavior</h2><p>What the controller should do after the final timed segment.</p></div></div>
+      <label>After the last segment
+        <select id="end">
+          <option value="0">Stop and switch heater output off (JC = 0)</option>
+          <option value="1">Hold at final temperature (JC = 1)</option>
+          <option value="2">Repeat continuously (JC = 2)</option>
+          <option value="3">Revert to local setpoint (JC = 3)</option>
+        </select>
+      </label>
+    </section>
+
+    <div class="actions input-only">
+      <button id="convert" type="button">Create furnace program</button>
+      <button id="example" class="secondary" type="button">Load & create Annealing 1 example</button>
+      <button id="clear" class="ghost" type="button">Clear profile</button>
+    </div>
+    <div id="error" class="error input-only" role="alert" aria-live="polite"></div>
+
+    <section id="result" class="report" hidden aria-live="polite"></section>
+  </main>
+
+  <template id="stage-template">
+    <article class="stage">
+      <div class="stage-top"><strong class="stage-number"></strong><button class="remove" type="button" aria-label="Remove stage">×</button></div>
+      <div class="grid stage-grid">
+        <label>Stage name<input class="name" placeholder="e.g. Heating 1"></label>
+        <label>
+        Stage type
+        <select class="kind" required>
+          <option value="" selected disabled>Select stage type</option>
+          <option value="ramp">Heating</option>
+          <option value="hold">Holding</option>
+          <option value="cool">Cooling</option>
+        </select>
+      </label>
+        <label class="target-wrap" required>Target temperature (°C)<input class="target" type="number" min="0" max="1100" step="0.1"></label>
+        <label>Duration (minutes)<input class="duration" type="number" min="1" max="5999" step="1" placeholder="or enter ramp rate"></label>
+        <label class="rate-wrap">rate (°C/min)<input class="rate" type="number" min="0.01" step="0.01" placeholder="optional"></label>
+        <label>Comments / notes<input class="note" placeholder="optional"></label>
+      </div>
+    </article>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
